@@ -1,0 +1,62 @@
+body {
+  color: Maroon;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+button:focus {
+  outline: 0;
+}
+
+p {
+  font-size: 1.25rem;
+}
+
+a {
+  background-color: Maroon;
+  margin-left: 3em;
+  margin-right: 3em;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: white;
+  color: maroon;
+  border: 2px solid maroon;
+  text-decoration: none;
+}
+
+.row > div {
+  padding-bottom: 2rem;
+}
+
+.title-container {
+  text-align: center;
+  padding: 3rem;
+}
+
+.card {
+  -webkit-box-shadow: 8px 8px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 8px 8px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 8px 8px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color: Ivory;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.card-body > p {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.25rem;
+}
