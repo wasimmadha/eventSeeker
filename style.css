@@ -41,9 +41,9 @@ a:hover {
 }
 
 .card {
-  -webkit-box-shadow: 8px 8px 5px 0px maroon;
-  -moz-box-shadow: 8px 8px 5px 0px maroon;
-  box-shadow: 8px 8px 5px 0px maroon;
+  -webkit-box-shadow: 8px 8px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 8px 8px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 8px 8px 5px 0px rgba(0, 0, 0, 0.75);
   background-color: Ivory;
 }
 
