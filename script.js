@@ -31,9 +31,81 @@ title.append(titleHeading, titleText);
 row = document.createElement("div");
 row.setAttribute("class", "row");
 
-// Append elements to container
-elementContainer.append(title, row);
+/*
+Search Functionality added
 
+Creates the elements for the search functionality 
+*/
+
+searchBox = document.createElement("div");
+searchBox.setAttribute("class", "search");
+inputSearch = document.createElement("input");
+inputSearch.setAttribute("type", "text");
+inputSearch.setAttribute("name", "searchBar");
+inputSearch.setAttribute("placeholder", "Search for Event");
+
+searchBox.append(inputSearch);
+
+// Append elements to container
+elementContainer.append(title, searchBox, row);
+
+/*
+Fetch the content of seatgeek api and display the result using
+displayContent() function
+
+Also has a search functionality which filter the content according to the search string
+*/
+async function addContent() {
+  try {
+    let res = await fetch(
+      "https://api.seatgeek.com/2/events?client_id=MjcwMjQxMDl8MTY1MjgwODYzMi4xMjA3NTQ"
+    );
+    let result = await res.json();
+    result = result["events"];
+    displayContent(result);
+
+    searchBox.addEventListener("keyup", (e) => {
+      let searchString = e.target.value;
+      let filteredEvents = result.filter((events) => {
+        return (
+          events["title"].includes(searchString) ||
+          events["venue"]["name"].includes(searchString)
+        );
+      });
+      row.innerHTML = "";
+      displayContent(filteredEvents);
+    });
+    
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/*
+It takes the whole result of json data as input and pass the content 
+to the createCard() function which displays the content on page 
+*/
+function displayContent(result) {
+  for (i in result) {
+    let titleOne = result[i]["title"];
+    let image = result[i]["performers"][0]["image"];
+    let venue = result[i]["venue"]["name"];
+    let link = result[i]["url"];
+
+    if (image != null) {
+      createCard(
+        (title = titleOne),
+        (image = image),
+        (text = venue),
+        (link = link)
+      );
+    }
+  }
+}
+
+/*
+This function creates the card with the content given
+*/
 function createCard(title, image, text, link = "#") {
   col = document.createElement("div");
   col.setAttribute("class", "col-lg-4 col-md-6 col-sm-12");
@@ -71,42 +143,11 @@ function createCard(title, image, text, link = "#") {
   row.append(col);
 }
 
-// var title = "Jersey Shore BlueClaws at Wilmington Blue Rocks";
-// var text =
-//   "Lorem ipsum, dolor sit amet consectetur adipisicing elit Optio odio nostrum aliquam voluptate exercitationem labore quibusdam illo vero modi. Qui dicta cupiditate delectus nam,quia facilis aliquam eveniet voluptas sapiente?";
-// var image =
-//   "https://seatgeek.com/images/performers-landscape/generic-minor-league-baseball-9c1f76/677210/35944/huge.jpg";
-
-// createCard((title = title), (image = image), (text = text));
-
-// createCard((title = title), (image = image), (text = text));
-
-async function addContent() {
-  let res = await fetch(
-    "https://api.seatgeek.com/2/events?client_id=MjcwMjQxMDl8MTY1MjgwODYzMi4xMjA3NTQ"
-  );
-  let result = await res.json();
-
-  for (i in result["events"]) {
-    let titleOne = result["events"][i]["title"];
-    let image = result["events"][i]["performers"][0]["image"];
-    let venue = result["events"][i]["venue"]["name"];
-    let link = result["events"][i]["url"];
-    createCard(
-      (title = titleOne),
-      (image = image),
-      (text = venue),
-      (link = link)
-    );
-  }
-
-  console.log(result["events"]);
-}
-
+// Add cards to the row
 addContent();
 
 // Append elements to container
-elementContainer.append(title, row);
+elementContainer.append(title, searchBox, row);
 
 // Append container to the body
 document.body.append(elementContainer);
